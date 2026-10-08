@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
+import { MobileBottomNav } from './components/MobileBottomNav';
 import { AlertsBanner } from './components/AlertsBanner';
 import { ZoneDetailModal } from './components/ZoneDetailModal';
 import { EcoAgentDrawer } from './components/EcoAgentDrawer';
@@ -272,13 +273,13 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 flex flex-col selection:bg-emerald-500/30 selection:text-emerald-300">
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col selection:bg-emerald-500/30 selection:text-emerald-700">
       
       {/* Toast Notification */}
       {notificationToast && (
         <div className="fixed bottom-6 right-6 z-50 animate-bounce">
-          <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-slate-900/95 border border-emerald-500/50 text-white shadow-2xl backdrop-blur-xl text-xs sm:text-sm font-semibold">
-            <span className="text-emerald-400">⚡</span>
+          <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-white border border-emerald-500/50 text-slate-900 shadow-2xl backdrop-blur-xl text-xs sm:text-sm font-semibold">
+            <span className="text-emerald-600">⚡</span>
             <span>{notificationToast.message}</span>
           </div>
         </div>
@@ -308,7 +309,7 @@ export function App() {
       />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-20 sm:pb-6">
         
         {/* Global Live Alert Banner (shows landfill 90% in 5 days alert) */}
         <AlertsBanner
@@ -388,7 +389,7 @@ export function App() {
           <div>
             🌿 EcoCity AI — Municipal Solid Waste Autonomous Command Center • Anvation Hackathon
           </div>
-          <div className="flex items-center gap-4 text-slate-400">
+          <div className="flex items-center gap-4 text-slate-500">
             <span>React 19</span>
             <span>•</span>
             <span>Vite</span>
@@ -434,6 +435,14 @@ export function App() {
         onOpenEcoAgentWithQuery={(query) => {
           setIsEcoAgentOpen(true);
         }}
+      />
+
+      {/* Mobile Sticky Bottom Nav Bar */}
+      <MobileBottomNav
+        activeScreen={activeScreen}
+        setActiveScreen={setActiveScreen}
+        onOpenEcoAgent={() => setIsEcoAgentOpen(true)}
+        alertsCount={alerts.length}
       />
 
     </div>

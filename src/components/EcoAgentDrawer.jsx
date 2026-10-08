@@ -196,47 +196,47 @@ export const EcoAgentDrawer = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/30 backdrop-blur-xs animate-fadeIn">
       <div 
-        className="w-full max-w-2xl h-full bg-[#0b1120] border-l border-slate-800 shadow-2xl flex flex-col"
+        className="w-full max-w-2xl h-full bg-white border-l border-slate-200 shadow-xl flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Drawer Header */}
-        <div className="flex items-center justify-between p-5 border-b border-slate-800 bg-[#0d1527]">
+        <div className="flex items-center justify-between p-5 border-b border-slate-200 bg-slate-50">
           <div className="flex items-center gap-3">
-            <div className="relative flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 p-0.5 shadow-lg shadow-emerald-950">
-              <div className="w-full h-full bg-[#090e1a] rounded-[14px] flex items-center justify-center">
-                <Bot className="w-6 h-6 text-emerald-400" />
+            <div className="relative flex items-center justify-center w-11 h-11 rounded-2xl bg-emerald-100 border border-emerald-300 p-0.5 shadow-xs">
+              <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
+                <Bot className="w-6 h-6 text-emerald-600" />
               </div>
-              <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-400 rounded-full border-2 border-[#090e1a] animate-pulse"></span>
+              <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white animate-pulse"></span>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-lg font-bold font-heading text-white">EcoAgent AI Intelligence</h3>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                <h3 className="text-lg font-bold font-heading text-slate-900">EcoAgent AI Intelligence</h3>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
                   OPERATIONAL CO-PILOT
                 </span>
               </div>
-              <p className="text-xs text-slate-400">Analyzes, Predicts and Acts • 10 Connected Tools</p>
+              <p className="text-xs text-slate-500">Analyzes, Predicts and Acts • 10 Connected Tools</p>
             </div>
           </div>
 
           <button 
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-200 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* View Switcher Tabs */}
-        <div className="flex items-center border-b border-slate-800 bg-[#090e1a] px-4">
+        <div className="flex items-center border-b border-slate-200 bg-slate-50 px-4">
           <button
             onClick={() => setActiveTab('chat')}
             className={`flex items-center gap-2 py-3 px-4 text-xs font-bold font-mono border-b-2 transition-all cursor-pointer ${
               activeTab === 'chat'
-                ? 'border-emerald-400 text-emerald-300 bg-emerald-950/20'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                ? 'border-emerald-500 text-emerald-700 bg-white shadow-xs'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             <Bot className="w-4 h-4" />
@@ -247,8 +247,8 @@ export const EcoAgentDrawer = ({
             onClick={() => setActiveTab('tools')}
             className={`flex items-center gap-2 py-3 px-4 text-xs font-bold font-mono border-b-2 transition-all cursor-pointer ${
               activeTab === 'tools'
-                ? 'border-cyan-400 text-cyan-300 bg-cyan-950/20'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                ? 'border-cyan-500 text-cyan-700 bg-white shadow-xs'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             <Terminal className="w-4 h-4" />
@@ -261,7 +261,7 @@ export const EcoAgentDrawer = ({
             className={`flex items-center gap-2 py-3 px-4 text-xs font-bold font-mono border-b-2 transition-all cursor-pointer ${
               activeTab === 'actions'
                 ? 'border-amber-400 text-amber-300 bg-amber-950/20'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             <Zap className="w-4 h-4" />
@@ -275,10 +275,10 @@ export const EcoAgentDrawer = ({
           <div className="flex-1 flex flex-col overflow-hidden">
             
             {/* Judge Recommended Quick Inquiry Chips */}
-            <div className="p-3.5 bg-gradient-to-r from-slate-900/90 via-slate-900/50 to-slate-900/90 border-b border-slate-800">
-              <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-2">
-                <span className="flex items-center gap-1.5 text-emerald-300 font-bold">
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="p-3.5 bg-gradient-to-r from-slate-50/90 via-slate-900/50 to-slate-50/90 border-b border-slate-200">
+              <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 mb-2">
+                <span className="flex items-center gap-1.5 text-emerald-700 font-bold">
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
                   Judge Quick Inquiry Prompts:
                 </span>
                 <span className="text-[10px] text-slate-500">Click to execute</span>
@@ -289,13 +289,13 @@ export const EcoAgentDrawer = ({
                   <button
                     key={idx}
                     onClick={() => handleAskJudgeQuestion(jq.query)}
-                    className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-emerald-500/60 hover:bg-emerald-950/20 text-left transition-all group cursor-pointer"
+                    className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/70 border border-slate-200 hover:border-emerald-500/60 hover:bg-emerald-950/20 text-left transition-all group cursor-pointer"
                   >
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-200 group-hover:text-emerald-300">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-800 group-hover:text-emerald-700">
                       <span className="text-sm">{jq.icon}</span>
                       <span>"{jq.label}"</span>
                     </div>
-                    <span className="text-[10px] font-mono text-slate-500 group-hover:text-emerald-400 flex items-center gap-1">
+                    <span className="text-[10px] font-mono text-slate-500 group-hover:text-emerald-600 flex items-center gap-1">
                       <span>Query</span>
                       <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                     </span>
@@ -314,18 +314,18 @@ export const EcoAgentDrawer = ({
                   <div 
                     className={`max-w-[90%] rounded-2xl p-4 text-xs leading-relaxed ${
                       item.sender === 'user'
-                        ? 'bg-emerald-600 text-white rounded-br-none shadow-md font-medium'
-                        : 'bg-slate-900/95 border border-slate-800 text-slate-200 rounded-bl-none shadow-xl'
+                        ? 'bg-emerald-600 text-slate-900 rounded-br-none shadow-md font-medium'
+                        : 'bg-white border border-slate-200 text-slate-800 rounded-bl-none shadow-xl'
                     }`}
                   >
                     {/* Tool invocation badge for agent messages */}
                     {item.sender === 'agent' && item.tools && item.tools.length > 0 && (
-                      <div className="mb-2.5 pb-2 border-b border-slate-800/80 flex flex-wrap items-center gap-1.5">
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold flex items-center gap-1">
+                      <div className="mb-2.5 pb-2 border-b border-slate-200/80 flex flex-wrap items-center gap-1.5">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-600 font-bold flex items-center gap-1">
                           <Terminal className="w-3 h-3" /> Tools Invoked:
                         </span>
                         {item.tools.map((t, tidx) => (
-                          <span key={tidx} className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                          <span key={tidx} className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-700 border border-emerald-500/20">
                             {t}
                           </span>
                         ))}
@@ -343,25 +343,25 @@ export const EcoAgentDrawer = ({
               ))}
 
               {isTyping && (
-                <div className="flex items-center gap-2 text-slate-400 text-xs p-3 rounded-2xl bg-slate-900/60 border border-slate-800 w-fit">
-                  <Bot className="w-4 h-4 text-emerald-400 animate-spin" />
-                  <span className="font-mono text-emerald-300">EcoAgent executing operational tool graph...</span>
+                <div className="flex items-center gap-2 text-slate-500 text-xs p-3 rounded-2xl bg-white/90 border border-slate-200 w-fit">
+                  <Bot className="w-4 h-4 text-emerald-600 animate-spin" />
+                  <span className="font-mono text-emerald-700">EcoAgent executing operational tool graph...</span>
                 </div>
               )}
             </div>
 
             {/* Input Bar */}
-            <form onSubmit={handleSendMessage} className="p-3.5 border-t border-slate-800 bg-[#090d18] flex items-center gap-2">
+            <form onSubmit={handleSendMessage} className="p-3.5 border-t border-slate-200 bg-[#090d18] flex items-center gap-2">
               <input
                 type="text"
                 value={userQuery}
                 onChange={(e) => setUserQuery(e.target.value)}
                 placeholder="Ask EcoAgent (e.g., 'Which zones need collection now?', 'Why is Market Zone high risk?')..."
-                className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/70"
+                className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-900 placeholder-slate-500 focus:outline-none focus:border-emerald-500/70"
               />
               <button
                 type="submit"
-                className="p-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition-colors cursor-pointer shadow-lg shadow-emerald-950"
+                className="p-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-900 transition-colors cursor-pointer shadow-lg shadow-emerald-950"
               >
                 <Send className="w-4 h-4" />
               </button>
@@ -375,8 +375,8 @@ export const EcoAgentDrawer = ({
           <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
             
             {/* Tool Selection Sidebar */}
-            <div className="w-full md:w-5/12 border-r border-slate-800 overflow-y-auto p-3 space-y-1.5 bg-[#090e1a]">
-              <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold px-2 py-1">
+            <div className="w-full md:w-5/12 border-r border-slate-200 overflow-y-auto p-3 space-y-1.5 bg-[#090e1a]">
+              <div className="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold px-2 py-1">
                 Operational Tool Functions ({toolsList.length})
               </div>
 
@@ -389,34 +389,34 @@ export const EcoAgentDrawer = ({
                     className={`w-full text-left p-2.5 rounded-xl text-xs transition-all cursor-pointer flex flex-col gap-1 border ${
                       isSelected
                         ? 'bg-cyan-950/40 border-cyan-500/50 text-cyan-200'
-                        : 'bg-slate-900/60 border-slate-800 text-slate-300 hover:border-slate-700'
+                        : 'bg-white/90 border-slate-200 text-slate-700 hover:border-slate-300'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-mono font-bold text-white text-[11px] truncate">{tool.name}</span>
-                      <Play className="w-3 h-3 text-cyan-400" />
+                      <span className="font-mono font-bold text-slate-900 text-[11px] truncate">{tool.name}</span>
+                      <Play className="w-3 h-3 text-cyan-600" />
                     </div>
-                    <span className="text-[10px] text-slate-400 line-clamp-1">{tool.desc}</span>
+                    <span className="text-[10px] text-slate-500 line-clamp-1">{tool.desc}</span>
                   </button>
                 );
               })}
             </div>
 
             {/* Tool Execution Inspector Console */}
-            <div className="flex-1 flex flex-col bg-[#070b14] overflow-hidden">
-              <div className="p-3 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+            <div className="flex-1 flex flex-col bg-slate-50 overflow-hidden">
+              <div className="p-3 border-b border-slate-200 flex items-center justify-between bg-slate-950">
                 <div className="flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-cyan-400" />
+                  <Terminal className="w-4 h-4 text-cyan-600" />
                   <span className="text-xs font-mono font-bold text-cyan-300">{selectedToolName}</span>
                 </div>
-                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                <span className="text-[10px] font-mono text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
                   LIVE EXECUTION
                 </span>
               </div>
 
               <div className="flex-1 p-4 overflow-y-auto font-mono text-xs">
                 {activeToolResult ? (
-                  <pre className="text-cyan-300 bg-slate-950/90 p-4 rounded-xl border border-slate-800 overflow-x-auto text-[11px] leading-relaxed">
+                  <pre className="text-cyan-300 bg-slate-950/90 p-4 rounded-xl border border-slate-200 overflow-x-auto text-[11px] leading-relaxed">
                     {JSON.stringify(activeToolResult, null, 2)}
                   </pre>
                 ) : (
@@ -434,9 +434,9 @@ export const EcoAgentDrawer = ({
         {/* TAB 3: Action Queue */}
         {activeTab === 'actions' && (
           <div className="flex-1 p-4 overflow-y-auto space-y-3">
-            <div className="flex items-center justify-between text-xs text-emerald-300 font-mono font-bold uppercase tracking-wider mb-2">
+            <div className="flex items-center justify-between text-xs text-emerald-700 font-mono font-bold uppercase tracking-wider mb-2">
               <span className="flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-emerald-400" />
+                <Zap className="w-3.5 h-3.5 text-emerald-600" />
                 Autonomous Action Queue
               </span>
               <span>{recommendations.length} Directives</span>
@@ -449,30 +449,30 @@ export const EcoAgentDrawer = ({
                   key={rec.id} 
                   className={`p-4 rounded-2xl border text-xs transition-all ${
                     isExecuted 
-                      ? 'bg-slate-900/60 border-slate-800 text-slate-400 opacity-60' 
-                      : 'bg-slate-900/90 border-slate-700/80 hover:border-emerald-500/50'
+                      ? 'bg-white/90 border-slate-200 text-slate-500 opacity-60' 
+                      : 'bg-white border-slate-300/80 hover:border-emerald-500/50'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <div className="font-bold text-white flex items-center gap-1.5">
+                    <div className="font-bold text-slate-900 flex items-center gap-1.5">
                       <span>{rec.id === 'rec-1' ? '🔴' : rec.id === 'rec-2' ? '🟠' : '🟡'}</span>
                       <span className="text-sm">"{rec.text}"</span>
                     </div>
                     {isExecuted && (
-                      <span className="flex items-center gap-1 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+                      <span className="flex items-center gap-1 text-[10px] font-mono text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
                         <CheckCircle2 className="w-3 h-3" /> Executed
                       </span>
                     )}
                   </div>
-                  <p className="text-slate-300 mt-2 text-xs leading-relaxed">{rec.details}</p>
-                  <div className="text-emerald-400 font-mono text-xs mt-2 flex items-center gap-1.5">
+                  <p className="text-slate-700 mt-2 text-xs leading-relaxed">{rec.details}</p>
+                  <div className="text-emerald-600 font-mono text-xs mt-2 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5" /> {rec.impact}
                   </div>
 
                   {!isExecuted && (
                     <button
                       onClick={() => onExecuteRecommendation(rec)}
-                      className="mt-3 w-full py-2 px-4 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                      className="mt-3 w-full py-2 px-4 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-slate-900 font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
                     >
                       <span>{rec.actionLabel}</span>
                       <ArrowRight className="w-4 h-4" />

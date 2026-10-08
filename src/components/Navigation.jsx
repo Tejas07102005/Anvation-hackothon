@@ -16,7 +16,7 @@ export const SCREENS = [
     screenNumber: 'Screen 1',
     icon: LayoutDashboard,
     badge: 'Live',
-    badgeColor: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    badgeColor: 'bg-emerald-500/20 text-emerald-600 border-emerald-500/30',
   },
   {
     id: 'waste_zones',
@@ -24,7 +24,7 @@ export const SCREENS = [
     screenNumber: 'Screen 2',
     icon: MapPin,
     badge: '6 Zones',
-    badgeColor: 'bg-red-500/20 text-red-400 border-red-500/30',
+    badgeColor: 'bg-red-500/20 text-red-600 border-red-500/30',
   },
   {
     id: 'historical_analytics',
@@ -32,7 +32,7 @@ export const SCREENS = [
     screenNumber: 'Screen 3',
     icon: LineChart,
     badge: 'Sat +28%',
-    badgeColor: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+    badgeColor: 'bg-cyan-500/20 text-cyan-600 border-cyan-500/30',
   },
   {
     id: 'landfill',
@@ -40,7 +40,7 @@ export const SCREENS = [
     screenNumber: 'Screen 4',
     icon: AlertTriangle,
     badge: '78% Cap',
-    badgeColor: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+    badgeColor: 'bg-amber-500/20 text-amber-600 border-amber-500/30',
   },
   {
     id: 'collection',
@@ -48,7 +48,7 @@ export const SCREENS = [
     screenNumber: 'Screen 5',
     icon: Truck,
     badge: '86% On-Time',
-    badgeColor: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    badgeColor: 'bg-emerald-500/20 text-emerald-600 border-emerald-500/30',
   },
   {
     id: 'segregation',
@@ -72,15 +72,15 @@ export const SCREENS = [
     screenNumber: 'Fleet Routing',
     icon: Truck,
     badge: '31.2km Route',
-    badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 animate-pulse',
+    badgeColor: 'bg-emerald-500/20 text-emerald-700 border-emerald-500/40 animate-pulse',
   },
 ];
 
 export const Navigation = ({ activeScreen, setActiveScreen }) => {
   return (
-    <nav className="w-full bg-[#0b101e]/80 border-b border-slate-800/80 backdrop-blur-md sticky top-20 z-30 px-4 sm:px-6 lg:px-8 py-2.5">
+    <nav className="hidden sm:block w-full bg-white/95 border-b border-slate-200 backdrop-blur-md sticky top-20 z-30 px-4 sm:px-6 lg:px-8 py-2.5 shadow-xs">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5 scroll-smooth">
           {SCREENS.map((item) => {
             const Icon = item.icon;
             const isActive = activeScreen === item.id;
@@ -90,11 +90,11 @@ export const Navigation = ({ activeScreen, setActiveScreen }) => {
                 onClick={() => setActiveScreen(item.id)}
                 className={`flex items-center gap-2.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap cursor-pointer shrink-0 border ${
                   isActive
-                    ? 'bg-gradient-to-r from-emerald-950/80 to-slate-900 text-white border-emerald-500/50 shadow-lg shadow-emerald-950/50 ring-1 ring-emerald-500/20'
-                    : 'bg-slate-900/40 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 border-slate-800/80'
+                    ? 'bg-emerald-50 text-emerald-900 border-emerald-400 shadow-xs ring-1 ring-emerald-400/30'
+                    : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 border-slate-200'
                 }`}
               >
-                <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
+                <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-emerald-600' : 'text-slate-400'}`} />
                 <span>{item.label}</span>
                 <span className={`text-[10px] px-1.5 py-0.5 rounded-md border font-mono font-medium ${item.badgeColor}`}>
                   {item.badge}
