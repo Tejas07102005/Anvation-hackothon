@@ -1,9 +1,9 @@
-// Member 3: Vehicle Assignment & Route Optimization Engine
+// Municipal Vehicle Assignment & Route Optimization Engine
 // Implements:
-// 1. Step 1: Vehicle telematics dataset integration
-// 2. Step 2: Capacity + Demand + Priority + Distance assignment algorithm
-// 3. Step 3: Traveling Salesperson / Nearest Neighbor route comparison (42.6 km vs 31.2 km)
-// 4. Step 4: What-If Simulator with Waste Demand, Vehicle fleet, and Capacity inputs
+// 1. Vehicle telematics dataset integration
+// 2. Capacity + Demand + Priority + Distance assignment algorithm
+// 3. Traveling Salesperson / Nearest Neighbor route comparison (42.6 km vs 31.2 km)
+// 4. What-If Simulator with Waste Demand, Vehicle fleet, and Capacity inputs
 
 import vehiclesDataset from '../../data/vehicles.json';
 

@@ -1,4 +1,4 @@
-// Member 2: AI Intelligence Engine & Predictive Model
+// Municipal AI Intelligence Engine & Predictive Models
 // Implements:
 // 1. CSV Historical Analytics (Weekly Average, Saturday Surge, Growth %)
 // 2. Weighted Risk Scoring Formula (35%, 25%, 15%, 15%, 10%)

@@ -15,7 +15,7 @@ import { SourceSegregationScreen } from './screens/SourceSegregationScreen';
 import { DataAndAIScreen } from './screens/DataAndAIScreen';
 import { RouteOptimizationScreen } from './screens/RouteOptimizationScreen';
 
-// Mock Data Baseline & Member 2 AI Intelligence Datasets
+// Mock Data Baseline & Municipal Datasets
 import { 
   INITIAL_OVERVIEW, 
   INITIAL_ZONES, 
@@ -34,7 +34,7 @@ export function App() {
   const [recommendations, setRecommendations] = useState(ECO_AGENT_RECOMMENDATIONS);
   const [bins, setBins] = useState(initialBins);
   
-  // Real-time Simulation Engine State (Member 2 Step 6)
+  // Real-time IoT Sensor Simulation State
   const [isSimulationRunning, setIsSimulationRunning] = useState(false);
   
   // Modals & Drawers
@@ -237,7 +237,7 @@ export function App() {
         onToggleSimulation={handleToggleSimulation}
       />
 
-      {/* Screen Navigation Tabs (Screen 1 - Screen 6 + Member 2) */}
+      {/* Screen Navigation Tabs */}
       <Navigation
         activeScreen={activeScreen}
         setActiveScreen={setActiveScreen}

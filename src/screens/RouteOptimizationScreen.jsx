@@ -76,7 +76,7 @@ export const RouteOptimizationScreen = ({ zones, onDispatchVehicle }) => {
           <div className="flex items-center gap-2">
             <span className="text-2xl">🚛</span>
             <h2 className="text-xl sm:text-2xl font-bold font-heading text-white">
-              Member 3 — Vehicle & Route Optimization Engine
+              Dynamic Vehicle & Route Optimization Engine
             </h2>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
               Action Engine Active
