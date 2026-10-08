@@ -14,7 +14,10 @@
     "last_pickup_hours_ago": 6.5,
     "historical_score": 84,
     "assigned_vehicle": "V12",
-    "coordinates": [12.9850, 77.7260]
+    "coordinates": [
+      12.9850,
+      77.7260
+    ]
   },
   {
     "id": 2,
@@ -31,7 +34,10 @@
     "last_pickup_hours_ago": 2.0,
     "historical_score": 38,
     "assigned_vehicle": "V09",
-    "coordinates": [12.9300, 77.5850]
+    "coordinates": [
+      12.9300,
+      77.5850
+    ]
   },
   {
     "id": 3,
@@ -48,7 +54,10 @@
     "last_pickup_hours_ago": 5.0,
     "historical_score": 68,
     "assigned_vehicle": "V17",
-    "coordinates": [12.9352, 77.6245]
+    "coordinates": [
+      12.9352,
+      77.6245
+    ]
   },
   {
     "id": 4,
@@ -65,7 +74,10 @@
     "last_pickup_hours_ago": 8.0,
     "historical_score": 92,
     "assigned_vehicle": "V04",
-    "coordinates": [12.9698, 77.5750]
+    "coordinates": [
+      12.9698,
+      77.5750
+    ]
   },
   {
     "id": 5,
@@ -82,7 +94,10 @@
     "last_pickup_hours_ago": 3.0,
     "historical_score": 25,
     "assigned_vehicle": "V06",
-    "coordinates": [12.9380, 77.5340]
+    "coordinates": [
+      12.9380,
+      77.5340
+    ]
   },
   {
     "id": 6,
@@ -99,6 +114,9 @@
     "last_pickup_hours_ago": 4.5,
     "historical_score": 58,
     "assigned_vehicle": "V18",
-    "coordinates": [12.9780, 77.6400]
+    "coordinates": [
+      12.9780,
+      77.6400
+    ]
   }
 ]

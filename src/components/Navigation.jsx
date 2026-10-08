@@ -64,7 +64,15 @@ export const SCREENS = [
     screenNumber: 'Member 2',
     icon: Sparkles,
     badge: 'Step 1-6 Live',
-    badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40 animate-pulse',
+    badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+  },
+  {
+    id: 'route_optimization',
+    label: 'Route & Fleet AI',
+    screenNumber: 'Member 3',
+    icon: Truck,
+    badge: '31.2km Route',
+    badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 animate-pulse',
   },
 ];
 

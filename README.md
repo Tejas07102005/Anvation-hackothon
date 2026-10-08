@@ -183,3 +183,49 @@ Example: $82\% + (4.5\% \times 3) = 95.5\% \rightarrow \mathbf{96\%}$ (🔴 CRIT
   - `BIN-1058 → 92%`
   - `BIN-1081 → 61%`
   - `BIN-1092 → 96% 🔴`
+
+---
+
+## 🚛 MEMBER 3 — VEHICLE + ROUTE OPTIMIZATION
+
+### Goal Pipeline
+$$\text{HIGH RISK ZONES} \longrightarrow \text{VEHICLE ASSIGNMENT} \longrightarrow \text{OPTIMIZED ROUTE} \longrightarrow \text{FUEL / DISTANCE SAVING}$$
+
+### Step 1: Vehicle Dataset (`data/vehicles.json`)
+```json
+[
+  { "id": "V12", "capacity": 5000, "current_load": 1000, "status": "available" },
+  { "id": "V17", "capacity": 4000, "current_load": 500, "status": "available" },
+  { "id": "V21", "capacity": 5000, "current_load": 0, "status": "available" }
+]
+```
+
+### Step 2: Vehicle Assignment Algorithm
+$$\text{Priority Sort} \longrightarrow \text{Waste Demand} \longrightarrow \text{Vehicle Capacity} \longrightarrow \text{Distance Check} \longrightarrow \text{Assign}$$
+
+- 🔴 **Market Zone D** $\longrightarrow$ **V12**
+- 🔴 **Industrial A** $\longrightarrow$ **V17**
+- 🟠 **Commercial C** $\longrightarrow$ **V21**
+- 🟢 **Residential B** $\longrightarrow$ **next cycle**
+
+### Step 3: Route Optimization
+- **Current Route**: `Depot → A → D → B → C → Depot` = **42.6 km**
+- **EcoCity Route**: `Depot → A → C → B → D → Depot` = **31.2 km**
+
+**Optimization Results**:
+- **Distance saved**: **11.4 km** ($-26.8\%$)
+- **Fuel saved**: **2.3 L** per shift
+- **CO₂ avoided**: **6.2 kg**
+
+### Step 4: What-If Scenario Simulator
+- **Waste Demand Slider**: `[──────●────] 30%`
+- **Vehicles Slider**: `[────●─────] 4`
+- **Bin Unit Capacity**: `1000 kg`
+
+**Simulation Output**:
+- Current waste: **8.4 tons** $\longrightarrow$ New waste: **10.9 tons**
+- Overflow zones: **3 $\longrightarrow$ 6**
+- Vehicles required: **4 $\longrightarrow$ 5**
+- Fuel consumption: **+18%**
+- **AI Recommendation**: *"Deploy 1 additional vehicle"* (with one-click deployment action)
+

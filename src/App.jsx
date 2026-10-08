@@ -13,6 +13,7 @@ import { LandfillIntelligenceScreen } from './screens/LandfillIntelligenceScreen
 import { CollectionReliabilityScreen } from './screens/CollectionReliabilityScreen';
 import { SourceSegregationScreen } from './screens/SourceSegregationScreen';
 import { DataAndAIScreen } from './screens/DataAndAIScreen';
+import { RouteOptimizationScreen } from './screens/RouteOptimizationScreen';
 
 // Mock Data Baseline & Member 2 AI Intelligence Datasets
 import { 
@@ -304,6 +305,13 @@ export function App() {
             bins={bins}
             isSimulationRunning={isSimulationRunning}
             onToggleSimulation={handleToggleSimulation}
+            onDispatchVehicle={handleDispatchVehicle}
+          />
+        )}
+
+        {activeScreen === 'route_optimization' && (
+          <RouteOptimizationScreen
+            zones={zones}
             onDispatchVehicle={handleDispatchVehicle}
           />
         )}
