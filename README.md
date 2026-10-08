@@ -123,7 +123,63 @@ Displays all 6 designated zones with the complete zone specification model:
 ---
 
 ## 🎮 Interactive Demo Controls for Judges
-1. **Simulate Surge**: Top-right flame button triggers an emergency waste spike in Market Zone D (fill jumps to 98%), spawning emergency alarms and updating AI routing.
-2. **EcoAgent AI Drawer**: Top-right button opens the conversational copilot to query municipal vectors or authorize one-click autonomous dispatches.
-3. **Interactive Map**: Click any marker to view real-time zone telemetry or dispatch a truck.
-4. **What-If Slider**: Screen 4 slider dynamically recalibrates the 7-day saturation curve.
+1. **▶ START LIVE SIMULATION**: Top navigation and Step 6 button starts real-time IoT sensor telemetry pings (`BIN-1042 → 87%`, `BIN-1058 → 92%`, `BIN-1081 → 61%`, `BIN-1092 → 96% 🔴`), recomputing risk scores across all municipal zones.
+2. **Simulate Surge**: Top-right flame button triggers an emergency waste spike in Market Zone D (fill jumps to 98%), spawning emergency alarms and updating AI routing.
+3. **EcoAgent AI Drawer**: Top-right button opens the conversational copilot to query municipal vectors or authorize one-click autonomous dispatches.
+4. **Interactive Map**: Click any marker to view real-time zone telemetry or dispatch a truck.
+5. **What-If Slider**: Screen 4 slider dynamically recalibrates the 7-day saturation curve.
+
+---
+
+## 🤖 MEMBER 2 — DATA + AI ARCHITECTURE
+
+### Step 1: Datasets in `data/`
+- [`data/historical_waste.csv`](file:///c:/Users/pavan/Downloads/Anvation-hackothon/data/historical_waste.csv): Time-series records (`date,zone,type,waste_kg,fill_percent`)
+- [`data/zones.json`](file:///c:/Users/pavan/Downloads/Anvation-hackothon/data/zones.json): Zone models with id, name, type, activity, bins, current_waste, capacity, fill
+- [`data/vehicles.json`](file:///c:/Users/pavan/Downloads/Anvation-hackothon/data/vehicles.json): Fleet telematics, payload weights, routes, drivers
+- [`data/landfill.json`](file:///c:/Users/pavan/Downloads/Anvation-hackothon/data/landfill.json): 78% capacity, 42 T/day intake, 35 T/day processing, 7-day forecast
+- [`data/collections.json`](file:///c:/Users/pavan/Downloads/Anvation-hackothon/data/collections.json): Route punctuality timetable and reliability benchmarks
+- [`data/bins.json`](file:///c:/Users/pavan/Downloads/Anvation-hackothon/data/bins.json): IoT ultrasonic bin sensors (`BIN-1042`, `BIN-1058`, `BIN-1081`, `BIN-1092`)
+
+### Step 2: Zone Data Schema
+```json
+{
+  "id": 1,
+  "name": "Industrial A",
+  "type": "industrial",
+  "activity": 95,
+  "bins": 128,
+  "current_waste": 4800,
+  "capacity": 5500,
+  "fill": 87
+}
+```
+
+### Step 3: Multi-Factor Weighted Risk Score
+Exact formula:
+$$\text{Risk Score} = (\text{Waste Volume} \times 0.35) + (\text{Fill Level} \times 0.25) + (\text{Activity} \times 0.15) + (\text{Historical} \times 0.15) + (\text{Pickup Delay} \times 0.10)$$
+
+Risk bands:
+- `0–30`: **LOW 🟢**
+- `31–60`: **MEDIUM 🟠**
+- `61–80`: **HIGH 🟠**
+- `81–100`: **CRITICAL 🔴**
+
+### Step 4: Overflow Prediction Engine
+$$\text{Predicted 3-Hour Fill} = \text{Current Fill} + (\text{Growth Rate/hr} \times 3)$$
+Example: $82\% + (4.5\% \times 3) = 95.5\% \rightarrow \mathbf{96\%}$ (🔴 CRITICAL)
+- **Insight generated**: *"Whitefield is predicted to reach critical capacity within 3 hours. Recommendation: Dispatch Vehicle V12."*
+
+### Step 5: Historical Analysis & Synthesis
+- Weekly average = `42 tons`
+- Saturday waste = `54 tons`
+- Weekend surge: $\frac{54 - 42}{42} \times 100 = \mathbf{28.6\%}$
+- **EcoAgent Insight**: *"Saturday waste generation is 28% higher than the weekly average."*
+
+### Step 6: Real-Time IoT Sensor Simulation
+- Ticker button: **`▶ START LIVE SIMULATION`**
+- Broadcasts real-time ultrasonic pings:
+  - `BIN-1042 → 87%`
+  - `BIN-1058 → 92%`
+  - `BIN-1081 → 61%`
+  - `BIN-1092 → 96% 🔴`

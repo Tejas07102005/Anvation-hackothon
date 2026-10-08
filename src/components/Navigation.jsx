@@ -58,6 +58,14 @@ export const SCREENS = [
     badge: 'Score 62',
     badgeColor: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
   },
+  {
+    id: 'data_and_ai',
+    label: 'Data + AI Engine',
+    screenNumber: 'Member 2',
+    icon: Sparkles,
+    badge: 'Step 1-6 Live',
+    badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40 animate-pulse',
+  },
 ];
 
 export const Navigation = ({ activeScreen, setActiveScreen }) => {

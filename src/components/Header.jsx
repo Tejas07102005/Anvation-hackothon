@@ -18,7 +18,9 @@ export const Header = ({
   onSimulateSurge, 
   onResetData,
   onOpenEcoAgent,
-  isSurgeActive 
+  isSurgeActive,
+  isSimulationRunning,
+  onToggleSimulation
 }) => {
   const [time, setTime] = useState(new Date());
 
@@ -104,6 +106,20 @@ export const Header = ({
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
+            </button>
+
+            {/* Step 6: Live Simulation Engine Toggle Button */}
+            <button
+              onClick={onToggleSimulation}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer border shadow-md ${
+                isSimulationRunning
+                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400 shadow-emerald-500/30 ring-1 ring-emerald-400'
+                  : 'bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border-slate-700'
+              }`}
+              title="Toggle Live IoT Bin Simulation (Step 6)"
+            >
+              <span className={`w-2 h-2 rounded-full ${isSimulationRunning ? 'bg-emerald-400 animate-ping' : 'bg-slate-500'}`}></span>
+              <span>{isSimulationRunning ? 'LIVE SIM ACTIVE' : '▶ SIMULATE'}</span>
             </button>
 
             {/* Simulation Trigger (Hackathon demo killer feature) */}

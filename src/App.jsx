@@ -12,8 +12,9 @@ import { HistoricalAnalyticsScreen } from './screens/HistoricalAnalyticsScreen';
 import { LandfillIntelligenceScreen } from './screens/LandfillIntelligenceScreen';
 import { CollectionReliabilityScreen } from './screens/CollectionReliabilityScreen';
 import { SourceSegregationScreen } from './screens/SourceSegregationScreen';
+import { DataAndAIScreen } from './screens/DataAndAIScreen';
 
-// Mock Data Baseline
+// Mock Data Baseline & Member 2 AI Intelligence Datasets
 import { 
   INITIAL_OVERVIEW, 
   INITIAL_ZONES, 
@@ -21,6 +22,7 @@ import {
   INITIAL_ALERTS, 
   ECO_AGENT_RECOMMENDATIONS 
 } from './data/mockData';
+import { initialBins, simulateSensorTick } from './services/aiIntelligenceEngine';
 
 export function App() {
   const [activeScreen, setActiveScreen] = useState('command_center');
@@ -29,6 +31,10 @@ export function App() {
   const [vehicles, setVehicles] = useState(INITIAL_VEHICLES);
   const [alerts, setAlerts] = useState(INITIAL_ALERTS);
   const [recommendations, setRecommendations] = useState(ECO_AGENT_RECOMMENDATIONS);
+  const [bins, setBins] = useState(initialBins);
+  
+  // Real-time Simulation Engine State (Member 2 Step 6)
+  const [isSimulationRunning, setIsSimulationRunning] = useState(false);
   
   // Modals & Drawers
   const [selectedZone, setSelectedZone] = useState(null);
@@ -40,6 +46,44 @@ export function App() {
   const showToast = (message, type = 'success') => {
     setNotificationToast({ message, type });
     setTimeout(() => setNotificationToast(null), 4000);
+  };
+
+  // Step 6: Live IoT Sensor Simulation Ticker Interval
+  React.useEffect(() => {
+    let interval = null;
+    if (isSimulationRunning) {
+      interval = setInterval(() => {
+        setBins(prevBins => {
+          setZones(prevZones => {
+            const { updatedBins, updatedZones } = simulateSensorTick(prevBins, prevZones);
+            
+            // Check for high risk bins like BIN-1092
+            const criticalBin = updatedBins.find(b => b.current_fill_percent >= 95);
+            if (criticalBin && Math.random() > 0.7) {
+              showToast(`⚡ IoT Ping: ${criticalBin.code} surged to ${criticalBin.current_fill_percent}%! Risk threshold crossed.`, 'warning');
+            }
+            
+            return updatedZones;
+          });
+          return prevBins; // Will be updated together in simulateSensorTick
+        });
+      }, 2500);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isSimulationRunning]);
+
+  const handleToggleSimulation = () => {
+    setIsSimulationRunning(prev => {
+      const next = !prev;
+      if (next) {
+        showToast('▶ Live IoT Bin Simulation Started! Receiving sensor telemetry every 2.5s.');
+      } else {
+        showToast('⏸ Live IoT Bin Simulation Paused.');
+      }
+      return next;
+    });
   };
 
   // Dispatch Truck to a zone
@@ -188,9 +232,11 @@ export function App() {
         onResetData={handleResetData}
         onOpenEcoAgent={() => setIsEcoAgentOpen(true)}
         isSurgeActive={isSurgeActive}
+        isSimulationRunning={isSimulationRunning}
+        onToggleSimulation={handleToggleSimulation}
       />
 
-      {/* Screen Navigation Tabs (Screen 1 - Screen 6) */}
+      {/* Screen Navigation Tabs (Screen 1 - Screen 6 + Member 2) */}
       <Navigation
         activeScreen={activeScreen}
         setActiveScreen={setActiveScreen}
@@ -250,6 +296,16 @@ export function App() {
 
         {activeScreen === 'segregation' && (
           <SourceSegregationScreen />
+        )}
+
+        {activeScreen === 'data_and_ai' && (
+          <DataAndAIScreen
+            zones={zones}
+            bins={bins}
+            isSimulationRunning={isSimulationRunning}
+            onToggleSimulation={handleToggleSimulation}
+            onDispatchVehicle={handleDispatchVehicle}
+          />
         )}
 
       </main>
