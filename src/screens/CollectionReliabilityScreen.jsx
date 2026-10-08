@@ -20,10 +20,36 @@ import {
   Tooltip 
 } from 'recharts';
 import { COLLECTION_SCHEDULE_DATA, COLLECTION_RELIABILITY_STATS } from '../data/mockData';
+import { fetchCollectionSchedule } from '../services/api';
 
 export const CollectionReliabilityScreen = () => {
   const [scheduleData, setScheduleData] = useState(COLLECTION_SCHEDULE_DATA);
   const [resolvedMissed, setResolvedMissed] = useState(false);
+  const [backendLoaded, setBackendLoaded] = useState(false);
+
+  React.useEffect(() => {
+    fetchCollectionSchedule().then(res => {
+      if (res && res.timetable && res.timetable.length > 0) {
+        const mapped = res.timetable.map((r, i) => ({
+          id: r.id || `col-${i}`,
+          zone: r.zone,
+          subArea: r.sub_area || r.subArea || '',
+          scheduledTime: r.scheduled_time || r.scheduledTime,
+          actualTime: r.actual_time || r.actualTime || '--',
+          varianceMins: r.variance_minutes ? `+${r.variance_minutes}m` : (r.varianceMins || '--'),
+          status: r.status,
+          statusCode: (r.status_code || r.statusCode || 'on_time').toLowerCase(),
+          statusColor: r.status === 'ON TIME' ? 'green' : r.status === 'DELAYED' ? 'orange' : 'red',
+          vehicleId: r.vehicle_id || r.vehicleId,
+          driver: r.driver,
+          reason: r.reason,
+          binsCollected: r.bins_collected ? `${r.bins_collected} / ${r.total_bins || 64}` : (r.binsCollected || '40 / 50'),
+        }));
+        setScheduleData(mapped);
+        setBackendLoaded(true);
+      }
+    }).catch(err => console.warn('Could not fetch collection schedule:', err));
+  }, []);
 
   // Auto-reassign missed route action
   const handleResolveMissed = () => {

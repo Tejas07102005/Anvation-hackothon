@@ -23,12 +23,28 @@ import {
   Legend 
 } from 'recharts';
 import { SEGREGATION_METRICS } from '../data/mockData';
+import { fetchSegregationAnalysis } from '../services/api';
 
 export const SourceSegregationScreen = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [enforcedAction, setEnforcedAction] = useState(false);
+  const [metrics, setMetrics] = useState(SEGREGATION_METRICS);
 
-  const zoneChartData = SEGREGATION_METRICS.zoneComparisons.map(z => ({
+  React.useEffect(() => {
+    fetchSegregationAnalysis().then(res => {
+      if (res && res.citywide) {
+        setMetrics(prev => ({
+          ...prev,
+          citywideScore: res.citywide.segregation_score || prev.citywideScore,
+          wetPercentage: res.citywide.wet_percent || prev.wetPercentage,
+          dryPercentage: res.citywide.dry_percent || prev.dryPercentage,
+          mixedPercentage: res.citywide.mixed_percent || prev.mixedPercentage,
+        }));
+      }
+    }).catch(err => console.warn('Could not fetch segregation analysis:', err));
+  }, []);
+
+  const zoneChartData = metrics.zoneComparisons.map(z => ({
     name: z.zone,
     fullName: z.fullName,
     score: z.score,
@@ -98,7 +114,7 @@ export const SourceSegregationScreen = () => {
           <div className="flex items-center gap-4 bg-slate-900/90 border border-slate-700/80 rounded-2xl p-3 sm:px-5 sm:py-3 shadow-lg">
             <div className="relative flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-purple-500 p-0.5">
               <div className="w-full h-full bg-[#0a0f1d] rounded-[14px] flex items-center justify-center">
-                <span className="text-xl font-black font-mono text-white">62</span>
+                <span className="text-xl font-black font-mono text-white">{metrics.citywideScore}</span>
               </div>
             </div>
             <div>
@@ -106,7 +122,7 @@ export const SourceSegregationScreen = () => {
                 Segregation Score
               </div>
               <div className="text-xl sm:text-2xl font-black font-mono text-amber-400">
-                62 / 100
+                {metrics.citywideScore} / 100
               </div>
               <div className="text-[10px] text-slate-400 font-mono">
                 Benchmark Target: 85/100 (Grade C+)
@@ -128,10 +144,10 @@ export const SourceSegregationScreen = () => {
             </div>
             <div className="my-4">
               <div className="text-5xl font-black font-mono text-emerald-400">
-                46%
+                {metrics.wetPercentage}%
               </div>
               <div className="w-full h-2 bg-slate-800 rounded-full mt-2.5 overflow-hidden">
-                <div className="h-full bg-emerald-500 rounded-full" style={{ width: '46%' }} />
+                <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${metrics.wetPercentage}%` }} />
               </div>
             </div>
             <span className="text-xs text-emerald-300/80 font-mono">Compostable Food & Agri-Waste</span>
@@ -147,10 +163,10 @@ export const SourceSegregationScreen = () => {
             </div>
             <div className="my-4">
               <div className="text-5xl font-black font-mono text-cyan-300">
-                31%
+                {metrics.dryPercentage}%
               </div>
               <div className="w-full h-2 bg-slate-800 rounded-full mt-2.5 overflow-hidden">
-                <div className="h-full bg-cyan-500 rounded-full" style={{ width: '31%' }} />
+                <div className="h-full bg-cyan-500 rounded-full" style={{ width: `${metrics.dryPercentage}%` }} />
               </div>
             </div>
             <span className="text-xs text-cyan-300/80 font-mono">Paper, Plastics, Metal, Glass</span>
@@ -167,10 +183,10 @@ export const SourceSegregationScreen = () => {
             </div>
             <div className="my-4">
               <div className="text-5xl font-black font-mono text-red-400">
-                23%
+                {metrics.mixedPercentage}%
               </div>
               <div className="w-full h-2 bg-slate-800 rounded-full mt-2.5 overflow-hidden">
-                <div className="h-full bg-red-500 rounded-full" style={{ width: '23%' }} />
+                <div className="h-full bg-red-500 rounded-full" style={{ width: `${metrics.mixedPercentage}%` }} />
               </div>
             </div>
             <span className="text-xs text-red-300/90 font-mono font-bold animate-pulse">
@@ -256,18 +272,35 @@ export const SourceSegregationScreen = () => {
                 </div>
               </div>
 
-              {/* Zone D: 41% 🔴 */}
-              <div className="p-4 rounded-2xl bg-red-950/20 border border-red-500/40 flex items-center justify-between hover:bg-red-950/30 transition-colors">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🛍️</span>
-                  <div>
-                    <div className="font-bold text-white text-base">Zone D <span className="text-xs text-red-300 font-normal">(Market D)</span></div>
-                    <div className="text-[11px] text-red-300 font-mono">Wet: 54% • Dry: 18% • Mixed: 28% (CRITICAL)</div>
+              {/* Zone D: 41% 🔴 Poor Segregation */}
+              <div className="p-4 rounded-2xl bg-red-950/30 border border-red-500/50 flex flex-col gap-3 hover:bg-red-950/40 transition-colors">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">🛍️</span>
+                    <div>
+                      <div className="font-bold text-white text-base">Zone D <span className="text-xs text-red-300 font-normal">(Market D)</span></div>
+                      <div className="text-[11px] text-red-300 font-mono font-semibold">
+                        Mixed waste = 41% • 🔴 Poor segregation
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl font-black font-mono text-red-400">41%</span>
+                    <span className="text-2xl animate-pulse">🔴</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl font-black font-mono text-red-400">41%</span>
-                  <span className="text-2xl">🔴</span>
+
+                {/* PROMPT SPECIFIED HISTORICAL DIAGNOSIS:
+                    EcoAgent: "Mixed waste increased from 32% to 41% during the last four weeks."
+                */}
+                <div className="p-3 rounded-xl bg-slate-900/90 border border-red-500/30 flex items-start gap-2.5">
+                  <span className="text-base">🤖</span>
+                  <div className="text-xs">
+                    <div className="font-bold text-emerald-400 font-mono text-[11px]">EcoAgent Historical Diagnosis:</div>
+                    <div className="text-slate-200 italic mt-0.5 font-medium">
+                      "Mixed waste increased from 32% to 41% during the last four weeks."
+                    </div>
+                  </div>
                 </div>
               </div>
 

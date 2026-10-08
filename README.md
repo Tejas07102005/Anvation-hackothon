@@ -229,3 +229,90 @@ $$\text{Priority Sort} \longrightarrow \text{Waste Demand} \longrightarrow \text
 - Fuel consumption: **+18%**
 - **AI Recommendation**: *"Deploy 1 additional vehicle"* (with one-click deployment action)
 
+---
+
+## ⚡ MEMBER 4 — ECOAGENT OPERATIONAL ENGINE & SUSTAINABILITY
+
+### Overview
+Member 4 implements the **Autonomous Operational Co-Pilot**, **Collection Reliability Engine**, and **Source Segregation Intelligence**. It connects real-time municipal telemetry with autonomous decision-making through 10 operational tools, interactive Judge Q&A, and direct dispatch actions.
+
+### 🛠️ The 10 Autonomous Operational Tools
+
+| # | Tool Function | Operational Responsibility | Key Telemetry / Output |
+|---|---|---|---|
+| 1 | `get_realtime_bins()` | Queries live IoT ultrasonic sensors | 1,420 bins monitored; critical bin `BIN-1092` at 96% |
+| 2 | `get_historical_waste()` | Retrieves time-series volume trends | 40.6T weekly average; Saturday +28.6% surge |
+| 3 | `get_landfill_status()` | Real-time landfill cell utilization | 78% capacity, 42 T/day intake vs 35 T/day processing (+7 T/day) |
+| 4 | `predict_landfill_capacity()` | Projects saturation horizon & overflow risk | 86% tomorrow, 96% in 7 days; 90% breach in 5 days |
+| 5 | `detect_collection_failures()` | Audits scheduled vs actual route timing | 86% On-Time, 9% Delayed, 5% Missed (Indiranagar missed) |
+| 6 | `calculate_segregation_score()` | Audits wet / dry / mixed streams & contamination | Citywide score 62/100; Market Zone D mixed waste spike (41%) |
+| 7 | `find_high_risk_zones()` | Ranks sectors by multi-factor weighted formula | 3 zones: Market (94%), Industrial (88%), Commercial (83%) |
+| 8 | `optimize_vehicle_routes()` | Matches priority demand to vehicle capacity | Saves 11.4 km (-26.8%), 2.3L fuel, 6.2kg CO2 |
+| 9 | `create_collection_task()` | Dispatches autonomous directives to MDT | Direct dispatch of V12 / V18 with ETA & live routing |
+| 10 | `generate_daily_report()` | Cross-cutting municipal executive digest | Full daily audit: 42.8T generated, 28 vehicles active |
+
+---
+
+### 🎯 Hackathon Judge Evaluation Queries (Automated in EcoAgent)
+
+The EcoAgent drawer features one-click prompt chips answering the exact evaluation questions:
+
+#### 1. "Which zones need collection now?"
+- **Autonomous Tools Invoked**: `find_high_risk_zones()`, `optimize_vehicle_routes()`
+- **Agent Verdict**:
+  > **3 zones require immediate collection.**
+  > 1. Market Zone — 94% risk
+  > 2. Industrial Zone — 88% risk
+  > 3. Commercial Zone — 83% risk
+  > 
+  > *Recommendation: Dispatch V12 and V17.*
+
+#### 2. "Why is Market Zone high risk?"
+- **Autonomous Tools Invoked**: `get_realtime_bins()`, `get_historical_waste()`, `predict_landfill_capacity()`
+- **Agent Verdict**:
+  > **Market Zone is at 92% capacity.**
+  > Waste generation is 28% above the weekly average.
+  > Predicted capacity: **100% within 90 minutes.**
+  > 
+  > *Recommendation: Dispatch V12 immediately.*
+
+#### 3. "What is the biggest problem today?"
+- **Autonomous Tools Invoked**: `get_landfill_status()`, `predict_landfill_capacity()`, `detect_collection_failures()`
+- **Agent Verdict**:
+  > **Landfill capacity is the highest risk.**
+  > Current utilization: 82%
+  > Incoming waste: 48 tons/day (Historical: 41 tons/day, Forecast: 57 tons/day)
+  > 
+  > *Recommended Actions:*
+  > 1. Increase recyclable diversion
+  > 2. Prioritize high-risk zones
+  > 3. Optimize vehicle routes
+  > 4. Monitor landfill capacity hourly
+
+---
+
+### ⏱️ Collection Reliability Engine (Screen 5 & `/api/collection`)
+- **Punctuality Distribution**: **86% ON TIME**, **9% DELAYED**, **5% MISSED**
+- **Schedule vs Actual Timetable**: Tracks vehicle GPS, driver ID, variance, and root causes
+- **Autonomous Resolution**: One-click **Auto-Reschedule Missed Route** dispatches backup hauler **V18** to Indiranagar, restoring reliability to 89%.
+
+---
+
+### ♻️ Source Segregation Intelligence (Screen 6 & `/api/segregation`)
+- **Stream Breakdown**: **Wet 46%** • **Dry 31%** • **Mixed 23% 🔴**
+- **Citywide Compliance Score**: **62 / 100** (Grade C+)
+- **Critical Contamination Anomaly**: **Market Zone D** mixed waste reached **41%** (increased from 32% to 41% over the past 4 weeks).
+- **AI Computer Vision Audits**: Simulated optical bin camera scans identifying unsegregated waste and issuing green credits.
+
+---
+
+### 🌐 Member 4 API Endpoints (FastAPI Backend)
+```http
+POST /api/agent                     # Autonomous query answering with multi-tool calling
+GET  /api/agent/tools/{tool_name}    # Direct execution of any of the 10 operational tools
+POST /api/agent/task                 # Create automated vehicle dispatch task
+GET  /api/collection                 # Route punctuality timetable & reliability stats
+GET  /api/segregation                # Multi-stream segregation audit & zone rankings
+GET  /api/landfill                   # Landfill intake, capacity & 7-day runway projections
+```
+

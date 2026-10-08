@@ -20,7 +20,11 @@ export const Header = ({
   onOpenEcoAgent,
   isSurgeActive,
   isSimulationRunning,
-  onToggleSimulation
+  onToggleSimulation,
+  isDemoTourOpen,
+  onToggleDemoTour,
+  isBackendConnected = false,
+  onRefreshBackend
 }) => {
   const [time, setTime] = useState(new Date());
 
@@ -55,6 +59,18 @@ export const Header = ({
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
                   IoT MESH CONNECTED
                 </span>
+                <button
+                  onClick={onRefreshBackend}
+                  title="FastAPI Backend Status (Click to ping/sync)"
+                  className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold font-mono border transition-all cursor-pointer ${
+                    isBackendConnected
+                      ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40 hover:bg-emerald-900/80'
+                      : 'bg-amber-950/80 text-amber-300 border-amber-500/40 hover:bg-amber-900/80'
+                  }`}
+                >
+                  <span className={`w-1.5 h-1.5 rounded-full ${isBackendConnected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
+                  <span>{isBackendConnected ? '⚡ API :8000 LIVE' : '⚠️ API OFFLINE'}</span>
+                </button>
               </div>
               <p className="text-xs text-slate-400 font-medium">
                 Autonomous Waste Management & Predictive Command Center
@@ -120,6 +136,20 @@ export const Header = ({
             >
               <span className={`w-2 h-2 rounded-full ${isSimulationRunning ? 'bg-emerald-400 animate-ping' : 'bg-slate-500'}`}></span>
               <span>{isSimulationRunning ? 'LIVE SIM ACTIVE' : '▶ SIMULATE'}</span>
+            </button>
+
+            {/* 10-Step Judge Demo Tour Launcher */}
+            <button
+              onClick={onToggleDemoTour}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border shadow-md ${
+                isDemoTourOpen
+                  ? 'bg-purple-600 text-white border-purple-400 shadow-purple-500/30'
+                  : 'bg-purple-950/40 hover:bg-purple-900/50 text-purple-300 border-purple-800/60'
+              }`}
+              title="Launch 10-Step Judge Presentation Scenario"
+            >
+              <span className="text-xs">🎬</span>
+              <span className="hidden md:inline font-mono">10-Step Demo Tour</span>
             </button>
 
             {/* Simulation Trigger (Hackathon demo killer feature) */}

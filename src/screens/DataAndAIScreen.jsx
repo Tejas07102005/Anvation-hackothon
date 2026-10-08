@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Cpu, 
-  Database, 
-  Play, 
-  Pause, 
-  TrendingUp, 
-  AlertTriangle, 
-  Sparkles, 
-  Layers, 
-  CheckCircle2, 
-  Sliders, 
-  ArrowRight, 
-  RefreshCw, 
-  FileSpreadsheet, 
+import {
+  Cpu,
+  Database,
+  Play,
+  Pause,
+  TrendingUp,
+  AlertTriangle,
+  Sparkles,
+  Layers,
+  CheckCircle2,
+  Sliders,
+  ArrowRight,
+  RefreshCw,
+  FileSpreadsheet,
   Radio,
   Clock,
   Truck
 } from 'lucide-react';
-import { 
-  calculateWeightedRiskScore, 
-  predictOverflow, 
-  parseHistoricalData 
+import {
+  calculateWeightedRiskScore,
+  predictOverflow,
+  parseHistoricalData
 } from '../services/aiIntelligenceEngine';
 
 export const DataAndAIScreen = ({
@@ -33,7 +33,7 @@ export const DataAndAIScreen = ({
   const [selectedZoneIndex, setSelectedZoneIndex] = useState(0);
   const [predictionHours, setPredictionHours] = useState(3);
   const [activeSubTab, setActiveSubTab] = useState('models'); // 'models', 'datasets', 'simulation'
-  
+
   // Custom CSV Upload State
   const [customCsvText, setCustomCsvText] = useState(null);
   const [uploadedFileName, setUploadedFileName] = useState(null);
@@ -60,9 +60,9 @@ export const DataAndAIScreen = ({
           if (parsed.records.length > 0) {
             setCustomCsvText(content);
             setUploadedFileName(file.name);
-            setUploadStatus({ 
-              type: 'success', 
-              message: `Loaded "${file.name}" with ${parsed.recordsCount} records! Model re-indexed.` 
+            setUploadStatus({
+              type: 'success',
+              message: `Loaded "${file.name}" with ${parsed.recordsCount} records! Model re-indexed.`
             });
           } else {
             setUploadStatus({ type: 'error', message: 'No valid records found in CSV file.' });
@@ -115,13 +115,13 @@ export const DataAndAIScreen = ({
   const overflowPrediction = predictOverflow(currentZone, predictionHours);
 
   // The 4 priority demo bins highlighted in prompt
-  const highlightBins = bins.filter(b => 
+  const highlightBins = bins.filter(b =>
     ['BIN-1042', 'BIN-1058', 'BIN-1081', 'BIN-1092'].includes(b.code)
   );
 
   return (
     <div className="space-y-6 pb-12 animate-fadeIn">
-      
+
       {/* Screen Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-[#0d1424] border border-slate-800">
         <div>
@@ -143,11 +143,10 @@ export const DataAndAIScreen = ({
         <div className="flex items-center gap-3">
           <button
             onClick={onToggleSimulation}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black font-mono tracking-wider transition-all cursor-pointer shadow-lg ${
-              isSimulationRunning
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black font-mono tracking-wider transition-all cursor-pointer shadow-lg ${isSimulationRunning
                 ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-amber-950/80 animate-pulse'
                 : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-950/80'
-            }`}
+              }`}
           >
             {isSimulationRunning ? (
               <>
@@ -168,32 +167,29 @@ export const DataAndAIScreen = ({
       <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
         <button
           onClick={() => setActiveSubTab('models')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
-            activeSubTab === 'models'
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${activeSubTab === 'models'
               ? 'bg-slate-800 text-white border-slate-600 shadow-md'
               : 'bg-slate-900/40 text-slate-400 border-slate-800 hover:text-white'
-          }`}
+            }`}
         >
           🧠 Predictive & Risk Models (Steps 3, 4, 5)
         </button>
         <button
           onClick={() => setActiveSubTab('simulation')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 ${
-            activeSubTab === 'simulation'
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 ${activeSubTab === 'simulation'
               ? 'bg-slate-800 text-white border-slate-600 shadow-md'
               : 'bg-slate-900/40 text-slate-400 border-slate-800 hover:text-white'
-          }`}
+            }`}
         >
           <Radio className={`w-3.5 h-3.5 ${isSimulationRunning ? 'text-emerald-400 animate-ping' : 'text-slate-400'}`} />
           <span>⚡ Live IoT Sensor Ticker (Step 6)</span>
         </button>
         <button
           onClick={() => setActiveSubTab('datasets')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 ${
-            activeSubTab === 'datasets'
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5 ${activeSubTab === 'datasets'
               ? 'bg-slate-800 text-white border-slate-600 shadow-md'
               : 'bg-slate-900/40 text-slate-400 border-slate-800 hover:text-white'
-          }`}
+            }`}
         >
           <Database className="w-3.5 h-3.5 text-cyan-400" />
           <span>📁 Datasets & CSV Inspector (Steps 1, 2)</span>
@@ -203,10 +199,10 @@ export const DataAndAIScreen = ({
       {/* TAB 1: PREDICTIVE & RISK MODELS */}
       {activeSubTab === 'models' && (
         <div className="space-y-6">
-          
+
           {/* STEP 3 & STEP 4: RISK SCORING + OVERFLOW PREDICTION */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            
+
             {/* Left 7 Cols: Step 3 — Weighted Risk Score Formula */}
             <div className="lg:col-span-7 glass-panel rounded-3xl p-6 sm:p-7 border border-slate-800 space-y-5 flex flex-col justify-between">
               <div>
@@ -253,8 +249,8 @@ export const DataAndAIScreen = ({
                         <span>{riskAnalysis.emoji}</span>
                         <span className={
                           riskAnalysis.band === 'CRITICAL' ? 'text-red-400' :
-                          riskAnalysis.band === 'HIGH' ? 'text-amber-400' :
-                          riskAnalysis.band === 'MEDIUM' ? 'text-amber-300' : 'text-emerald-400'
+                            riskAnalysis.band === 'HIGH' ? 'text-amber-400' :
+                              riskAnalysis.band === 'MEDIUM' ? 'text-amber-300' : 'text-emerald-400'
                         }>
                           {riskAnalysis.band}
                         </span>
@@ -520,11 +516,10 @@ export const DataAndAIScreen = ({
 
             {/* Upload Notification Message */}
             {uploadStatus && (
-              <div className={`p-3 rounded-xl text-xs font-mono flex items-center justify-between ${
-                uploadStatus.type === 'success' ? 'bg-emerald-950/40 text-emerald-300 border border-emerald-500/30' :
-                uploadStatus.type === 'error' ? 'bg-red-950/40 text-red-300 border border-red-500/30' :
-                'bg-cyan-950/40 text-cyan-300 border border-cyan-500/30'
-              }`}>
+              <div className={`p-3 rounded-xl text-xs font-mono flex items-center justify-between ${uploadStatus.type === 'success' ? 'bg-emerald-950/40 text-emerald-300 border border-emerald-500/30' :
+                  uploadStatus.type === 'error' ? 'bg-red-950/40 text-red-300 border border-red-500/30' :
+                    'bg-cyan-950/40 text-cyan-300 border border-cyan-500/30'
+                }`}>
                 <span>{uploadStatus.message}</span>
                 <button onClick={() => setUploadStatus(null)} className="text-slate-400 hover:text-white ml-2">✕</button>
               </div>
@@ -536,7 +531,7 @@ export const DataAndAIScreen = ({
                 Increase = (54 - 42) / 42 × 100 = 28.6%
             */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              
+
               <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 font-mono">
                 <span className="text-xs uppercase text-slate-400 font-bold">Weekly Average</span>
                 <div className="text-3xl font-black text-white mt-2">
@@ -614,7 +609,7 @@ export const DataAndAIScreen = ({
       {activeSubTab === 'simulation' && (
         <div className="space-y-6">
           <div className="glass-panel rounded-3xl p-6 sm:p-7 border border-slate-800 space-y-6">
-            
+
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
               <div>
                 <div className="flex items-center gap-2">
@@ -631,11 +626,10 @@ export const DataAndAIScreen = ({
               {/* Toggle Simulation Button */}
               <button
                 onClick={onToggleSimulation}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black font-mono tracking-wider transition-all cursor-pointer shadow-lg ${
-                  isSimulationRunning
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black font-mono tracking-wider transition-all cursor-pointer shadow-lg ${isSimulationRunning
                     ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-amber-950/80 animate-pulse'
                     : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-950/80'
-                }`}
+                  }`}
               >
                 {isSimulationRunning ? (
                   <>
@@ -672,15 +666,14 @@ export const DataAndAIScreen = ({
                   const isWarning = bin.current_fill_percent >= 70 && bin.current_fill_percent < 90;
 
                   return (
-                    <div 
+                    <div
                       key={bin.id}
-                      className={`p-4 rounded-2xl border transition-all ${
-                        isCritical 
-                          ? 'bg-red-950/30 border-red-500/50 shadow-lg shadow-red-950/50' 
-                          : isWarning 
-                          ? 'bg-amber-950/20 border-amber-500/40' 
-                          : 'bg-slate-900/80 border-slate-800'
-                      }`}
+                      className={`p-4 rounded-2xl border transition-all ${isCritical
+                          ? 'bg-red-950/30 border-red-500/50 shadow-lg shadow-red-950/50'
+                          : isWarning
+                            ? 'bg-amber-950/20 border-amber-500/40'
+                            : 'bg-slate-900/80 border-slate-800'
+                        }`}
                     >
                       <div className="flex items-center justify-between font-mono text-xs">
                         <span className="font-bold text-white">{bin.code}</span>
@@ -691,9 +684,8 @@ export const DataAndAIScreen = ({
                       <div className="my-3 flex items-center justify-between font-mono">
                         <span className="text-lg font-bold text-slate-300">{bin.code} →</span>
                         <div className="flex items-center gap-1.5">
-                          <span className={`text-2xl font-black ${
-                            isCritical ? 'text-red-400' : isWarning ? 'text-amber-400' : 'text-emerald-400'
-                          }`}>
+                          <span className={`text-2xl font-black ${isCritical ? 'text-red-400' : isWarning ? 'text-amber-400' : 'text-emerald-400'
+                            }`}>
                             {bin.current_fill_percent}%
                           </span>
                           {isCritical && <span className="text-lg">🔴</span>}
@@ -703,10 +695,9 @@ export const DataAndAIScreen = ({
                       </div>
 
                       <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                        <div 
-                          className={`h-full rounded-full transition-all duration-500 ${
-                            isCritical ? 'bg-red-500' : isWarning ? 'bg-amber-500' : 'bg-emerald-500'
-                          }`}
+                        <div
+                          className={`h-full rounded-full transition-all duration-500 ${isCritical ? 'bg-red-500' : isWarning ? 'bg-amber-500' : 'bg-emerald-500'
+                            }`}
                           style={{ width: `${bin.current_fill_percent}%` }}
                         />
                       </div>
@@ -735,10 +726,9 @@ export const DataAndAIScreen = ({
                       <div className="text-[9px] text-slate-400 truncate max-w-[100px]">{bin.zone_name}</div>
                     </div>
                     <div className="text-right">
-                      <span className={`font-bold ${
-                        bin.current_fill_percent >= 90 ? 'text-red-400' :
-                        bin.current_fill_percent >= 70 ? 'text-amber-400' : 'text-emerald-400'
-                      }`}>
+                      <span className={`font-bold ${bin.current_fill_percent >= 90 ? 'text-red-400' :
+                          bin.current_fill_percent >= 70 ? 'text-amber-400' : 'text-emerald-400'
+                        }`}>
                         {bin.current_fill_percent}%
                       </span>
                       <div className="text-[9px] text-slate-500">{bin.status}</div>
@@ -866,7 +856,7 @@ export const DataAndAIScreen = ({
                 </span>
               </div>
               <pre className="text-[11px] font-mono text-slate-400 bg-black/40 p-3 rounded-xl overflow-x-auto max-h-48 overflow-y-auto">
-{`date,zone,type,waste_kg,fill_percent
+                {`date,zone,type,waste_kg,fill_percent
 2026-10-01,Industrial,wet,1800,72
 2026-10-01,Residential,wet,900,45
 2026-10-01,Commercial,dry,1400,61

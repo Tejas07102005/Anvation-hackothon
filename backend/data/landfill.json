@@ -1,0 +1,26 @@
+{
+  "facility_name": "South Integrated Landfill & Biostabilization Hub",
+  "current_capacity_percent": 78,
+  "max_capacity_tons": 1200000,
+  "current_occupied_tons": 936000,
+  "incoming_waste_tons_day": 42,
+  "processing_capacity_tons_day": 35,
+  "net_daily_accumulation_tons": 7,
+  "tomorrow_forecast_percent": 86,
+  "seven_day_forecast_percent": 96,
+  "overflow_risk": "HIGH OVERFLOW RISK",
+  "risk_severity": "critical",
+  "days_to_ninety_percent": 5,
+  "days_to_full": 11,
+  "cells": [
+    { "id": "cell-1", "name": "Cell Alpha", "type": "Dry Recyclable", "fill_percent": 64, "methane_ppm": 12, "status": "operating" },
+    { "id": "cell-2", "name": "Cell Beta", "type": "Inert Residue", "fill_percent": 88, "methane_ppm": 45, "status": "warning" },
+    { "id": "cell-3", "name": "Cell Gamma", "type": "Sanitary Landfill", "fill_percent": 94, "methane_ppm": 78, "status": "critical" },
+    { "id": "cell-4", "name": "Cell Delta", "type": "Bio-Stabilized", "fill_percent": 52, "methane_ppm": 8, "status": "optimal" }
+  ],
+  "mitigation_options": [
+    { "name": "Divert to Bio-methanation Unit 2", "effect_tons_day": -8, "status": "recommended" },
+    { "name": "Activate Secondary Compactor Line", "effect_tons_day": 4, "status": "ready" },
+    { "name": "Deploy Mobile Shredder", "effect_tons_day": 3, "status": "ready" }
+  ]
+}

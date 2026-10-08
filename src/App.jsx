@@ -4,6 +4,7 @@ import { Navigation } from './components/Navigation';
 import { AlertsBanner } from './components/AlertsBanner';
 import { ZoneDetailModal } from './components/ZoneDetailModal';
 import { EcoAgentDrawer } from './components/EcoAgentDrawer';
+import { DemoWalkthroughModal } from './components/DemoWalkthroughModal';
 
 // Screens
 import { CommandCenterScreen } from './screens/CommandCenterScreen';
@@ -24,6 +25,16 @@ import {
   ECO_AGENT_RECOMMENDATIONS 
 } from './data/mockData';
 import { initialBins, simulateSensorTick } from './services/aiIntelligenceEngine';
+import { 
+  checkBackendHealth, 
+  fetchDashboardSummary, 
+  fetchAlerts, 
+  fetchZones, 
+  fetchVehicles, 
+  fetchRealtimeBins,
+  normalizeOverview,
+  mergeZonesWithBackend 
+} from './services/api';
 
 export function App() {
   const [activeScreen, setActiveScreen] = useState('command_center');
@@ -33,6 +44,7 @@ export function App() {
   const [alerts, setAlerts] = useState(INITIAL_ALERTS);
   const [recommendations, setRecommendations] = useState(ECO_AGENT_RECOMMENDATIONS);
   const [bins, setBins] = useState(initialBins);
+  const [isBackendConnected, setIsBackendConnected] = useState(false);
   
   // Real-time IoT Sensor Simulation State
   const [isSimulationRunning, setIsSimulationRunning] = useState(false);
@@ -43,11 +55,59 @@ export function App() {
   const [executedActions, setExecutedActions] = useState([]);
   const [isSurgeActive, setIsSurgeActive] = useState(false);
   const [notificationToast, setNotificationToast] = useState(null);
+  const [isDemoTourOpen, setIsDemoTourOpen] = useState(false);
+  const [currentDemoStepIndex, setCurrentDemoStepIndex] = useState(0);
 
   const showToast = (message, type = 'success') => {
     setNotificationToast({ message, type });
     setTimeout(() => setNotificationToast(null), 4000);
   };
+
+  // Synchronize live municipal state from FastAPI Backend
+  const syncWithBackend = React.useCallback(async (showFeedback = false) => {
+    try {
+      const health = await checkBackendHealth();
+      if (health.online) {
+        setIsBackendConnected(true);
+        const [dashRes, alertsRes, zonesRes, binsRes] = await Promise.allSettled([
+          fetchDashboardSummary(),
+          fetchAlerts(),
+          fetchZones(),
+          fetchRealtimeBins(),
+        ]);
+
+        if (dashRes.status === 'fulfilled' && dashRes.value) {
+          setOverview(prev => normalizeOverview(dashRes.value, prev));
+        }
+        if (zonesRes.status === 'fulfilled' && Array.isArray(zonesRes.value)) {
+          setZones(prev => mergeZonesWithBackend(zonesRes.value, prev));
+        }
+        if (alertsRes.status === 'fulfilled' && Array.isArray(alertsRes.value)) {
+          setAlerts(alertsRes.value);
+        }
+        if (binsRes.status === 'fulfilled' && binsRes.value && Array.isArray(binsRes.value.bins)) {
+          setBins(binsRes.value.bins);
+        }
+
+        if (showFeedback) {
+          showToast('⚡ FastAPI Backend Telemetry Synced (:8000)');
+        }
+      } else {
+        setIsBackendConnected(false);
+        if (showFeedback) {
+          showToast('⚠️ Backend unavailable, using local cache', 'warning');
+        }
+      }
+    } catch (err) {
+      setIsBackendConnected(false);
+      console.warn('Backend sync notice:', err);
+    }
+  }, []);
+
+  // Initial load backend connection check
+  React.useEffect(() => {
+    syncWithBackend(false);
+  }, [syncWithBackend]);
 
   // Step 6: Live IoT Sensor Simulation Ticker Interval
   React.useEffect(() => {
@@ -235,6 +295,10 @@ export function App() {
         isSurgeActive={isSurgeActive}
         isSimulationRunning={isSimulationRunning}
         onToggleSimulation={handleToggleSimulation}
+        isDemoTourOpen={isDemoTourOpen}
+        onToggleDemoTour={() => setIsDemoTourOpen(prev => !prev)}
+        isBackendConnected={isBackendConnected}
+        onRefreshBackend={() => syncWithBackend(true)}
       />
 
       {/* Screen Navigation Tabs */}
@@ -354,6 +418,22 @@ export function App() {
         recommendations={recommendations}
         onExecuteRecommendation={handleExecuteRecommendation}
         executedActions={executedActions}
+      />
+
+      {/* 10-Step Interactive Judge Demo Tour Modal */}
+      <DemoWalkthroughModal
+        isOpen={isDemoTourOpen}
+        onClose={() => setIsDemoTourOpen(false)}
+        currentStepIndex={currentDemoStepIndex}
+        onSetStepIndex={setCurrentDemoStepIndex}
+        onNavigateScreen={setActiveScreen}
+        onSelectZone={(zoneId) => {
+          const found = zones.find(z => z.id === zoneId);
+          if (found) setSelectedZone(found);
+        }}
+        onOpenEcoAgentWithQuery={(query) => {
+          setIsEcoAgentOpen(true);
+        }}
       />
 
     </div>
